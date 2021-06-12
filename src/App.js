@@ -17,6 +17,9 @@ class App extends React.Component {
 
     this.handleStageClick = this.handleStageClick.bind(this);
     this.handleClearClick = this.handleClearClick.bind(this);
+    this.handleNextStepClick = this.handleNextStepClick.bind(this);
+    this.handleAnimateClick = this.handleAnimateClick.bind(this);
+    this.handleResultClick = this.handleResultClick.bind(this);
     this.handleRandomizeClick = this.handleRandomizeClick.bind(this);
   }
 
@@ -27,6 +30,21 @@ class App extends React.Component {
 
   handleClearClick() {
     this.setState({ points: [] });
+  }
+
+  handleNextStepClick() {
+    // api.server.getIterator(this.state.points);
+    console.log("Reaching for iterator for", this.state.points.length, "points to API.");
+  }
+
+  handleAnimateClick() {
+    // api.server.getIterator(this.state.points);
+    console.log("Sending", this.state.points.length, "points to API to animate.");
+  }
+
+  handleResultClick() {
+    // api.server.getResult(this.state.points);
+    console.log("Reaching for result for", this.state.points.length, "points to API.");
   }
 
   // TODO: decide whether to restict number of points of canvas or not
@@ -51,6 +69,8 @@ class App extends React.Component {
   }
 
   render() {
+    let readyToStart = this.state.points.length >= 3;
+
     return (
       <Container fluid className="p-0 app d-flex flex-column">
           <Stage
@@ -80,15 +100,15 @@ class App extends React.Component {
           <Button variant="outline-secondary" disabled={!this.state.points.length} onClick={this.handleClearClick}>
             {'✕ Clear ✕'}
           </Button>
-          <Button variant="primary" disabled>
+          <Button variant="primary" disabled={!readyToStart} onClick={this.handleNextStepClick}>
             {'> Next step >'}
           </Button>
   
-          <Button variant="primary" disabled>
+          <Button variant="primary" disabled={!readyToStart} onClick={this.handleAnimateClick}>
             {'⏵ Animate ⏵'}
           </Button>
   
-          <Button variant="primary" disabled>
+          <Button variant="primary" disabled={!readyToStart} onClick={this.handleResultClick}>
             {'>> Result >>'}
           </Button>
   
