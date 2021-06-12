@@ -1,22 +1,34 @@
 import './styles/App.css';
+import { Container, Button } from 'react-bootstrap'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container fluid className="p-0 app d-flex flex-column">
+      <div className="canvas m-4 mb-0 p-0">
+
+      </div>
+
+      <footer className="toolbar d-flex justify-content-center align-items-center h-100">
+        <Button variant="outline-secondary" disabled>
+          {'✕ Clear ✕'}
+        </Button>
+        <Button variant="primary" disabled>
+          {'> Next step >'}
+        </Button>
+
+        <Button variant="primary" disabled>
+          {'⏵ Animate ⏵'}
+        </Button>
+
+        <Button variant="primary" disabled>
+          {'>> Result >>'}
+        </Button>
+
+        <Button variant="outline-primary">
+          {'⇋ Randomize ⇋'}
+        </Button>
+      </footer>
+    </Container>
   );
 }
 
