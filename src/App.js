@@ -16,6 +16,8 @@ class App extends React.Component {
     }
 
     this.handleStageClick = this.handleStageClick.bind(this);
+    this.handleClearClick = this.handleClearClick.bind(this);
+    this.handleRandomizeClick = this.handleRandomizeClick.bind(this);
   }
 
   handleStageClick(e) {
@@ -23,12 +25,37 @@ class App extends React.Component {
     this.setState({ points: [ {x, y}, ...this.state.points ] });
   };
 
+  handleClearClick() {
+    this.setState({ points: [] });
+  }
+
+  // TODO: decide whether to restict number of points of canvas or not
+  handleRandomizeClick() {
+    const randomPoint = (maxX, maxY) => {
+      return {
+        x: Math.random() * maxX,
+        y: Math.random() * maxY
+      }
+    }
+
+    let randomPoints = [];
+    for (let i = 0; i < 10; i++) {
+      randomPoints.push(
+        randomPoint(
+          window.innerWidth * dimensions.canvasWidthMultiplier,
+          window.innerHeight * dimensions.canvasHeigthMultiplier)
+        )
+    }
+
+    this.setState({ points: [ ...randomPoints, ...this.state.points ] });
+  }
+
   render() {
     return (
       <Container fluid className="p-0 app d-flex flex-column">
           <Stage
-            width={window.innerWidth}
-            height={window.innerHeight * 0.88}
+            width={window.innerWidth * dimensions.canvasWidthMultiplier}
+            height={window.innerHeight * dimensions.canvasHeigthMultiplier}
             className="canvas m-4 mb-0 p-0"
             style={{ backgroundColor: colors.canvas }}
             onClick={this.handleStageClick}
@@ -50,7 +77,7 @@ class App extends React.Component {
           </Stage>
   
         <footer className="toolbar d-flex justify-content-center align-items-center h-100">
-          <Button variant="outline-secondary" disabled>
+          <Button variant="outline-secondary" disabled={!this.state.points.length} onClick={this.handleClearClick}>
             {'✕ Clear ✕'}
           </Button>
           <Button variant="primary" disabled>
@@ -65,7 +92,7 @@ class App extends React.Component {
             {'>> Result >>'}
           </Button>
   
-          <Button variant="outline-primary">
+          <Button variant="outline-primary" onClick={this.handleRandomizeClick}>
             {'⇋ Randomize ⇋'}
           </Button>
         </footer>
