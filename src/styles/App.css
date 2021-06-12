@@ -6,6 +6,9 @@
   flex: 15;
   background-color: antiquewhite;
   border-radius: 15px;
+  overflow: hidden;
+  max-height: 88vh;
+  cursor: crosshair;
 }
 
 .toolbar {
