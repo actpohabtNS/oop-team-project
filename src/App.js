@@ -1,10 +1,11 @@
 import React from 'react';
 import { Container, Button } from 'react-bootstrap'
-import { Stage, Layer, Circle, Line } from 'react-konva';
+import { Stage, Layer, Line } from 'react-konva';
 
 import './styles/App.css';
 import colors from './styles/colors';
 import dimensions from './styles/dimensions';
+import Point from './components/Point'
 
 class App extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class App extends React.Component {
     this.handleRandomizeClick = this.handleRandomizeClick.bind(this);
   }
 
+  // TODO: check if there is a point on click location
   handleStageClick(e) {
     let {x, y} = e.currentTarget.getPointerPosition();
     this.setState({ points: [ {x, y}, ...this.state.points ] });
@@ -90,8 +92,7 @@ class App extends React.Component {
               />
 
               {
-                //TODO: point appearing animation
-                this.state.points.map((point, idx) => <Circle x={point.x} y={point.y} radius={dimensions.pointRadius} fill={colors.point} key={idx} />)
+                this.state.points.map(point => <Point x={point.x} y={point.y} key={`point-${point.x}-${point.y}`} />)
               }
             </Layer>
           </Stage>
