@@ -15,42 +15,42 @@ class App extends React.Component {
       points: [],
       lines: []
     }
-
-    this.handleStageClick = this.handleStageClick.bind(this);
-    this.handleClearClick = this.handleClearClick.bind(this);
-    this.handleNextStepClick = this.handleNextStepClick.bind(this);
-    this.handleAnimateClick = this.handleAnimateClick.bind(this);
-    this.handleResultClick = this.handleResultClick.bind(this);
-    this.handleRandomizeClick = this.handleRandomizeClick.bind(this);
   }
 
-  // TODO: check if there is a point on click location
-  handleStageClick(e) {
+  closePoint = point => {
+    return this.state.points.find(_point => Math.abs(point.x - _point.x) < dimensions.pointRadius*2 && Math.abs(point.y - _point.y) < dimensions.pointRadius*2);
+  }
+  
+  handleStageClick = e => {
     let {x, y} = e.currentTarget.getPointerPosition();
+
+    if (this.closePoint({x, y})) {
+      return;
+    }
+
     this.setState({ points: [ {x, y}, ...this.state.points ] });
   };
 
-  handleClearClick() {
+  handleClearClick = () => {
     this.setState({ points: [] });
   }
 
-  handleNextStepClick() {
+  handleNextStepClick = () => {
     // api.server.getIterator(this.state.points);
     console.log("Reaching for iterator for", this.state.points.length, "points to API.");
   }
 
-  handleAnimateClick() {
+  handleAnimateClick = () => {
     // api.server.getIterator(this.state.points);
     console.log("Sending", this.state.points.length, "points to API to animate.");
   }
 
-  handleResultClick() {
+  handleResultClick = () => {
     // api.server.getResult(this.state.points);
     console.log("Reaching for result for", this.state.points.length, "points to API.");
   }
 
-  // TODO: decide whether to restict number of points of canvas or not
-  handleRandomizeClick() {
+  handleRandomizeClick = () => {
     const randomPoint = (maxX, maxY) => {
       return {
         x: Math.random() * maxX,
