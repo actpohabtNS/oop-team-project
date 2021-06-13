@@ -15,7 +15,9 @@ class Link extends React.Component {
     const { start, end } = this.props;
 
     this.link.current.setAttrs({
-      points: [ start.x, start.y, start.x, start.y ]
+      points: [ start.x, start.y, start.x, start.y ],
+      dash: this.props.dashed ? this.props.dash : [0, 0],
+      strokeWidth: this.props.dashed ? dimensions.dashStroke : dimensions.lineStroke,
     })
 
     this.link.current.to({
@@ -30,12 +32,21 @@ class Link extends React.Component {
     }, durations.lineDraw * 1000);
   }
 
+  shouldComponentUpdate(nextProps) {
+    this.link.current.to({
+      dash: nextProps.dashed ? nextProps.dash : [0, 0],
+      strokeWidth: nextProps.dashed ? dimensions.dashStroke : dimensions.lineStroke,
+      duration: durations.lineDraw
+    });
+
+    return true;
+  }
+
   render() {
     return (
       <Line
         ref={this.link}
         stroke={colors.line}
-        strokeWidth={dimensions.lineStroke}
         lineCap='round'
         lineJoin='round'
       />

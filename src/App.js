@@ -91,7 +91,7 @@ class App extends React.Component {
           >
             <Layer>
                 {
-                  this.state.lines.map(line => <Link start={line.start} end={line.end} key={`link-${line.start.x}-${line.start.y}-${line.end.x}-${line.end.y}`} />)
+                  this.state.lines.map((line, idx) => <Link start={line.start} end={line.end} dash={ idx % 2 === 0 ? dimensions.dash : [] } dashed={idx % 2 === 0} key={`link-${line.start.x}-${line.start.y}-${line.end.x}-${line.end.y}`} />)
                 }
             </Layer>
 
