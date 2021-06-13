@@ -1,0 +1,153 @@
+{
+  "steps": [{
+      "lines": [{
+        "startPoint": {
+          "x": 0,
+          "y": 400
+        },
+        "endPoint": {
+          "x": 100,
+          "y": 0
+        },
+        "isSolid": 1
+      }]
+    },
+    {
+      "lines": [{
+        "startPoint": {
+          "x": 100,
+          "y": 0
+        },
+        "endPoint": {
+          "x": 400,
+          "y": 400
+        },
+        "isSolid": 1
+      }]
+    },
+    {
+      "lines": [{
+          "startPoint": {
+            "x": 0,
+            "y": 400
+          },
+          "endPoint": {
+            "x": 400,
+            "y": 400
+          },
+          "isSolid": 1
+        },
+        {
+          "startPoint": {
+            "x": 0,
+            "y": 400
+          },
+          "endPoint": {
+            "x": 100,
+            "y": 0
+          },
+          "isSolid": 0
+        },
+        {
+          "startPoint": {
+            "x": 100,
+            "y": 0
+          },
+          "endPoint": {
+            "x": 400,
+            "y": 400
+          },
+          "isSolid": 0
+        }
+      ]
+    },
+    {
+      "lines": [{
+        "startPoint": {
+          "x": 400,
+          "y": 400
+        },
+        "endPoint": {
+          "x": 500,
+          "y": 0
+        },
+        "isSolid": 1
+      }]
+    },
+    {
+      "lines": [{
+        "startPoint": {
+          "x": 500,
+          "y": 0
+        },
+        "endPoint": {
+          "x": 400,
+          "y": 400
+        },
+        "isSolid": 1
+      }]
+    },
+    {
+      "lines": [{
+        "startPoint": {
+          "x": 400,
+          "y": 400
+        },
+        "endPoint": {
+          "x": 100,
+          "y": 0
+        },
+        "isSolid": 1
+      }]
+    },
+    {
+      "lines": [{
+          "startPoint": {
+            "x": 500,
+            "y": 0
+          },
+          "endPoint": {
+            "x": 100,
+            "y": 0
+          },
+          "isSolid": 1
+        },
+        {
+          "startPoint": {
+            "x": 500,
+            "y": 0
+          },
+          "endPoint": {
+            "x": 400,
+            "y": 400
+          },
+          "isSolid": 0
+        },
+        {
+          "startPoint": {
+            "x": 400,
+            "y": 400
+          },
+          "endPoint": {
+            "x": 100,
+            "y": 0
+          },
+          "isSolid": 0
+        }
+      ]
+    },
+    {
+      "lines": [{
+        "startPoint": {
+          "x": 100,
+          "y": 0
+        },
+        "endPoint": {
+          "x": 0,
+          "y": 400
+        },
+        "isSolid": 1
+      }]
+    }
+  ]
+}

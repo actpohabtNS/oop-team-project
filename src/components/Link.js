@@ -16,7 +16,7 @@ class Link extends React.Component {
 
     this.link.current.setAttrs({
       points: [ start.x, start.y, start.x, start.y ],
-      dash: this.props.dashed ? this.props.dash : [0, 0],
+      dash: this.props.dashed ? dimensions.dash : [0, 0],
       strokeWidth: this.props.dashed ? dimensions.dashStroke : dimensions.lineStroke,
     })
 
@@ -34,7 +34,7 @@ class Link extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     this.link.current.to({
-      dash: nextProps.dashed ? nextProps.dash : [0, 0],
+      dash: nextProps.dashed ? dimensions.dash : [0, 0],
       strokeWidth: nextProps.dashed ? dimensions.dashStroke : dimensions.lineStroke,
       duration: durations.lineDraw
     });
