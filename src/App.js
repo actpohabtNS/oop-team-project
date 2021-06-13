@@ -1,11 +1,12 @@
 import React from 'react';
 import { Container, Button } from 'react-bootstrap'
-import { Stage, Layer, Line } from 'react-konva';
+import { Stage, Layer } from 'react-konva';
 
 import './styles/App.css';
 import colors from './styles/colors';
 import dimensions from './styles/dimensions';
 import Point from './components/Point'
+import Link from './components/Link'
 
 class App extends React.Component {
   constructor(props) {
@@ -28,11 +29,17 @@ class App extends React.Component {
       return;
     }
 
+    if (this.state.points.length !== 0) {
+      const newLine = { start: { ...this.state.points[0] }, end: { x, y } };
+      this.setState({ lines: [newLine, ...this.state.lines] });
+    }
+
+
     this.setState({ points: [ {x, y}, ...this.state.points ] });
   };
 
   handleClearClick = () => {
-    this.setState({ points: [] });
+    this.setState({ points: [], lines: [] });
   }
 
   handleNextStepClick = () => {
@@ -83,14 +90,12 @@ class App extends React.Component {
             onClick={this.handleStageClick}
           >
             <Layer>
-              <Line
-                points={[555, 700, 140, 23, 250, 60, 300, 20]}
-                stroke={colors.line}
-                strokeWidth={dimensions.lineStroke}
-                lineCap='round'
-                lineJoin='round'
-              />
+                {
+                  this.state.lines.map(line => <Link start={line.start} end={line.end} key={`link-${line.start.x}-${line.start.y}-${line.end.x}-${line.end.y}`} />)
+                }
+            </Layer>
 
+            <Layer>
               {
                 this.state.points.map(point => <Point x={point.x} y={point.y} key={`point-${point.x}-${point.y}`} />)
               }

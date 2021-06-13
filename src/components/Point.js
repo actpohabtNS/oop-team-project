@@ -3,6 +3,7 @@ import { Circle } from 'react-konva'
 
 import colors from '../styles/colors';
 import dimensions from '../styles/dimensions';
+import durations from '../styles/durations';
 
 class Point extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Point extends React.Component {
     this.point.current.to({
       scaleX: to,
       scaleY: to,
-      duration: 0.2
+      duration: durations.pointAppear
     });
   }
 
