@@ -121,10 +121,14 @@ class App extends React.Component {
     this.setState({ playing: false, playingInterval: null });
   }
 
-  // TODO
   handleResultClick = () => {
-    // api.server.getResult(this.state.points);
-    console.log("Reaching for result for", this.state.points.length, "points to API.");
+    this.checkForIterator();
+
+    setTimeout(() => {
+      while (!this.state.done) {
+        this.loadStep();
+      }
+    });
   }
 
   handleRandomizeClick = () => {
