@@ -1,0 +1,9 @@
+{
+  "short_name": "Convex Hull",
+  "name": "Convex Hull algorithm visualizer",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
