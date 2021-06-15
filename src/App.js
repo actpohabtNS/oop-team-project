@@ -8,9 +8,9 @@ import dimensions from './styles/dimensions';
 import Point from './components/Point'
 import Link from './components/Link'
 
-import iterator from './api/iterator.json'
 import durations from './styles/durations';
 import { shallowCompare } from './utils/compare';
+import fetchIterator from './api/fetchIterator';
 
 const initialState = {
   playing: false,
@@ -57,12 +57,21 @@ class App extends React.Component {
   }
 
   loadStep = () => {
+    // check whether iterator is present
+    if (!this.state.iterator || !this.state.iterator.steps) {
+      clearInterval(this.state.playingInterval);
+      this.setState({ playing: false, playingInterval: null, iterator: null, step: -1 })
+      return;
+    }
+
+    // check whether all steps are loaded
     if (this.state.step === this.state.iterator.steps.length) {
       clearInterval(this.state.playingInterval);
       this.setState({ playing: false, playingInterval: null, iterator: null, step: -1, done: true });
       return;
     }
 
+    // load step from iterator and process all its lines
     const step = this.state.iterator.steps[this.state.step];
 
     for (let link of step.lines) {
@@ -90,30 +99,43 @@ class App extends React.Component {
     this.setState({ ...initialState });
   }
 
-  checkForIterator = () => {
+  loadIterator = (callback) => {
     if (!this.state.iterator) {
-      // api.server.getIterator(this.state.points);
-      console.log("Dear server, give me Iterator for such data", JSON.stringify({"points": this.state.points}));
-      this.TEMP_loadPoints();
+      fetchIterator('http://25.92.99.66:18080/convex-hull', JSON.stringify({"points": this.state.points}))
+      .then(iterator => {
+        if (!iterator) {
+          console.log("An error has occured while fetching iterator!");
+          return;
+        }
 
-      this.setState({ iterator, step: 0 });
+        this.setState({ iterator, step: 0 });
+
+        if (callback) {
+          callback();
+        }
+      });
+           
+    } else {
+      if (callback) {
+        callback();
+      }
     }
   }
 
   handleNextStepClick = () => {
-    this.checkForIterator();
-
-    // to prevent asynchronous state updates (when muptiple setState calls are batched into a single update)
-    // more: https://reactjs.org/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous 
-    setTimeout(this.loadStep);
+    this.loadIterator(() => {
+      // to prevent asynchronous state updates (when muptiple setState calls are batched into a single update)
+      // more: https://reactjs.org/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous 
+      setTimeout(this.loadStep);
+    });
   }
 
   handleAnimateClick = () => {
-    this.checkForIterator();
-
-    setTimeout(this.loadStep);
-    const playingInterval = setInterval(this.loadStep, durations.stepAnimation * 1000);
-    this.setState({ playing: true, playingInterval });
+    this.loadIterator(() => {
+      setTimeout(this.loadStep);
+      const playingInterval = setInterval(this.loadStep, durations.stepAnimation * 1000);
+      this.setState({ playing: true, playingInterval });
+    });  
   }
 
   handleStopClick = () => {
@@ -122,12 +144,12 @@ class App extends React.Component {
   }
 
   handleResultClick = () => {
-    this.checkForIterator();
-
-    setTimeout(() => {
-      while (!this.state.done) {
-        this.loadStep();
-      }
+    this.loadIterator(() => {
+      setTimeout(() => {
+        while (!this.state.done && this.state.step !== -1) {
+          this.loadStep();
+        }
+      });
     });
   }
 
