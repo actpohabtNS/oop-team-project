@@ -101,7 +101,7 @@ class App extends React.Component {
 
   loadIterator = (callback) => {
     if (!this.state.iterator) {
-      fetchIterator('http://25.92.99.66:18080/convex-hull', JSON.stringify({"points": this.state.points}))
+      fetchIterator('http://176.104.240.21:18080/convex-hull', JSON.stringify({"points": this.state.points}))
       .then(iterator => {
         if (!iterator) {
           console.log("An error has occured while fetching iterator!");
